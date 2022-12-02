@@ -70,7 +70,7 @@
             android:layout_gravity="center">
 
             <ImageView
-                android:id="@+id/id_cloudIc"
+                android:id="@+id/id_galleryIc"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_outline_image_24_black"
@@ -86,10 +86,10 @@
                 android:text="Cari dari Gallery"
                 android:textColor="@color/black"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@id/id_cloudIc"
+                app:layout_constraintBottom_toBottomOf="@id/id_galleryIc"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/id_cloudIc"
-                app:layout_constraintTop_toTopOf="@id/id_cloudIc" />
+                app:layout_constraintStart_toEndOf="@id/id_galleryIc"
+                app:layout_constraintTop_toTopOf="@id/id_galleryIc" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
