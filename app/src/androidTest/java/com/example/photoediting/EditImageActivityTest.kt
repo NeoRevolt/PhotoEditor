@@ -19,6 +19,7 @@ import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.filters.LargeTest
 import androidx.test.runner.AndroidJUnit4
+import com.example.photoediting.ui.toolsfragments.EmojiBSFragment
 import junit.framework.TestCase.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher

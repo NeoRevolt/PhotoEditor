@@ -20,8 +20,8 @@ import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.example.photoediting.base.BaseActivity
 import ja.burhanrashid52.photoeditor.OnPhotoEditorListener
-import com.example.photoediting.EmojiBSFragment.EmojiListener
-import com.example.photoediting.StickerBSFragment.StickerListener
+import com.example.photoediting.ui.toolsfragments.EmojiBSFragment.EmojiListener
+import com.example.photoediting.ui.toolsfragments.StickerBSFragment.StickerListener
 import com.example.photoediting.tools.EditingToolsAdapter.OnItemSelected
 import ja.burhanrashid52.photoeditor.PhotoEditor
 import ja.burhanrashid52.photoeditor.PhotoEditorView
@@ -49,6 +49,7 @@ import java.io.File
 import java.io.IOException
 import java.lang.Exception
 import androidx.annotation.RequiresPermission
+import com.example.photoediting.ui.toolsfragments.*
 import example.photoediting.R
 
 class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,

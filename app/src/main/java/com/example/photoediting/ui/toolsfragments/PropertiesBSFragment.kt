@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.ui.toolsfragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.SeekBar
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.photoediting.ColorPickerAdapter
 import com.example.photoediting.ColorPickerAdapter.OnColorPickerClickListener
 import example.photoediting.R
 

@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.ui.toolsfragments
 
 import android.annotation.SuppressLint
 import android.app.Dialog

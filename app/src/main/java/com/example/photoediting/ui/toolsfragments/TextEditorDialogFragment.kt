@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.ui.toolsfragments
 
 import android.content.Context
 import android.graphics.Color
@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import com.example.photoediting.ColorPickerAdapter
 import example.photoediting.R
 
 /**
