@@ -21,6 +21,9 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
+            android:name="com.example.photoediting.ui.RemoteImagesActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.photoediting.ui.HomePageActivity"
             android:exported="false" />
         <activity
