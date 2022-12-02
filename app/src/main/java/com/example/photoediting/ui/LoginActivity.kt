@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
                     if (responseBody != null) {
                         setSession(responseBody.loginResult)
                         sessionManager.saveAuthToken(responseBody.loginResult.token)
-                        Intent(this@LoginActivity, EditImageActivity::class.java).also {
+                        Intent(this@LoginActivity, HomePageActivity::class.java).also {
                             startActivity(it)
                             finish()
                         }
