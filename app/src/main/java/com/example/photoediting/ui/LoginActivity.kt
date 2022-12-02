@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
         val token = sharedPreferences.getString(KEY_TOKEN, null)
         if (token != null) {
-            val i = Intent(this, EditImageActivity::class.java)
+            val i = Intent(this, HomePageActivity::class.java)
             startActivity(i)
             finish()
         }
