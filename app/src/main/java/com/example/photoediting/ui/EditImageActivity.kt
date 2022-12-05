@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.ui
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -50,6 +50,7 @@ import java.io.IOException
 import java.lang.Exception
 import androidx.annotation.RequiresPermission
 import com.example.photoediting.ui.toolsfragments.*
+import com.example.photoediting.utils.FileSaveHelper
 import example.photoediting.R
 
 class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,

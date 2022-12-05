@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

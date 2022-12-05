@@ -1,4 +1,4 @@
-package com.example.photoediting
+package com.example.photoediting.utils
 
 import android.app.Application
 

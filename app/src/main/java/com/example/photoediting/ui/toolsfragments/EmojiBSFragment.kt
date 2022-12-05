@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCa
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.photoediting.PhotoApp.Companion.photoApp
+import com.example.photoediting.utils.PhotoApp.Companion.photoApp
 import example.photoediting.R
 import java.lang.NumberFormatException
 import java.util.ArrayList

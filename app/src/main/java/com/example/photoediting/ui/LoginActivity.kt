@@ -11,7 +11,6 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.example.photoediting.EditImageActivity
 import com.example.photoediting.remote.ApiConfig
 import com.example.photoediting.remote.LoginResponse
 import com.example.photoediting.remote.LoginResult

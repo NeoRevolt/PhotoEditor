@@ -13,13 +13,13 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.photoediting.ColorPickerAdapter.OnColorPickerClickListener
+import com.example.photoediting.ui.adapters.ColorPickerAdapter.OnColorPickerClickListener
 import kotlin.jvm.JvmOverloads
 import androidx.appcompat.app.AppCompatActivity
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import com.example.photoediting.ColorPickerAdapter
+import com.example.photoediting.ui.adapters.ColorPickerAdapter
 import example.photoediting.R
 
 /**

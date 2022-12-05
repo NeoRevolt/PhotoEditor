@@ -10,8 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ja.burhanrashid52.photoeditor.shape.ShapeType
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.photoediting.ColorPickerAdapter
-import com.example.photoediting.ColorPickerAdapter.OnColorPickerClickListener
+import com.example.photoediting.ui.adapters.ColorPickerAdapter
+import com.example.photoediting.ui.adapters.ColorPickerAdapter.OnColorPickerClickListener
 import example.photoediting.R
 
 class ShapeBSFragment : BottomSheetDialogFragment(), SeekBar.OnSeekBarChangeListener {
