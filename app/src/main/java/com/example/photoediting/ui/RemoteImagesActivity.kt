@@ -1,5 +1,6 @@
 package com.example.photoediting.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -89,13 +90,16 @@ class RemoteImagesActivity : AppCompatActivity() {
             //TODO
             adapter.setOnItemClickCallback(object : RemoteImagesAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: ListStoryItem) {
-                    Toast.makeText(
-                        this@RemoteImagesActivity,
-                        data.description,
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        this@RemoteImagesActivity,
+//                        data.description,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    Intent(this@RemoteImagesActivity, DetailActivity::class.java).also {
+                        it.putExtra(DetailActivity.EXTRA_PHOTO, data.photoUrl)
+                        startActivity(it)
+                    }
                 }
-
             })
         }
     }
