@@ -1,18 +1,19 @@
 package com.example.photoediting.ui
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.photoediting.EditImageActivity
 import com.example.photoediting.remote.ApiConfig
-import com.example.photoediting.remote.ApiService
+import com.example.photoediting.remote.GetAllStoryResponse
 import com.example.photoediting.remote.ListStoryItem
 import com.example.photoediting.ui.adapters.RemoteImagesAdapter
 import example.photoediting.databinding.ActivityRemoteImagesBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RemoteImagesActivity : AppCompatActivity() {
 
@@ -31,14 +32,52 @@ class RemoteImagesActivity : AppCompatActivity() {
 
         sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
 
-//        setStory()
+        setStory()
         initRv()
     }
 
-//    private fun setStory() {
-//        showLoading(true)
-//        val service = ApiConfig.getApiService(this).getAllStory()
-//    }
+    private fun setStory() {
+        showLoading(true)
+        val service = ApiConfig.getApiService(this).getAllStory(5, 0)
+        service.enqueue(object : Callback<GetAllStoryResponse> {
+            override fun onResponse(
+                call: Call<GetAllStoryResponse>,
+                response: Response<GetAllStoryResponse>
+            ) {
+                if (response.isSuccessful) {
+                    showLoading(false)
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        response.body()?.listStory?.let { listStoryItem.addAll(it) }
+//                        adapter.setList(response.body()!!.listStory)
+                        adapter.setList(listStoryItem)
+
+                        Toast.makeText(
+                            this@RemoteImagesActivity,
+                            "Welcome Back",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@RemoteImagesActivity,
+                            response.message(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllStoryResponse>, t: Throwable) {
+                showLoading(false)
+                Toast.makeText(
+                    this@RemoteImagesActivity,
+                    "Gagal mendapatkan Story",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+    }
 
     private fun initRv() {
         adapter = RemoteImagesAdapter()
@@ -47,7 +86,8 @@ class RemoteImagesActivity : AppCompatActivity() {
             rvImages.setHasFixedSize(true)
             rvImages.adapter = adapter
 
-            adapter.setOnItemClickCallback(object : RemoteImagesAdapter.OnItemClickCallback{
+            //TODO
+            adapter.setOnItemClickCallback(object : RemoteImagesAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: ListStoryItem) {
                     Toast.makeText(
                         this@RemoteImagesActivity,
@@ -61,7 +101,6 @@ class RemoteImagesActivity : AppCompatActivity() {
     }
 
 
-
     private fun showLoading(state: Boolean) {
         if (state) {
             binding.progressBar.visibility = View.VISIBLE
@@ -69,7 +108,4 @@ class RemoteImagesActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         }
     }
-
-
-
 }

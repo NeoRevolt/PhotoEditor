@@ -16,6 +16,7 @@ class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>
     fun setList(story: ArrayList<ListStoryItem>) {
         list.clear()
         list.addAll(story)
+        notifyDataSetChanged()
     }
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {

@@ -20,7 +20,7 @@ class HomePageActivity : AppCompatActivity() {
         btnFromGallery = findViewById(R.id.btn_searchFromGallery)
 
         btnFromRemote.setOnClickListener {
-            val intent = Intent(this, EditImageActivity::class.java)
+            val intent = Intent(this, RemoteImagesActivity::class.java)
             startActivity(intent)
         }
 
