@@ -74,7 +74,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     }
 
     private fun setStory() {
-        val service = ApiConfig.getApiService(this@StickerBSFragment.requireContext()).getAllStory(10, 0)
+        val service = ApiConfig.getApiService(this@StickerBSFragment.requireContext()).getAllStory(6, 0)
         service.enqueue(object : Callback<GetAllStoryResponse> {
             override fun onResponse(
                 call: Call<GetAllStoryResponse>,
@@ -83,8 +83,9 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                 if (response.isSuccessful) {
                     val responseBody = response.body()
                     if (responseBody != null && !responseBody.error) {
+                        listStoryItem.clear()
                         response.body()?.listStory?.let { listStoryItem.addAll(it) }
-                        listStoryItem.addAll(responseBody.listStory)
+//                        listStoryItem.addAll(responseBody.listStory)
 
 //                        adapter.setList(response.body()!!.listStory)
 
