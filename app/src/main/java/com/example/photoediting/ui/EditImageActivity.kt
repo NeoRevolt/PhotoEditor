@@ -6,9 +6,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
@@ -52,11 +55,13 @@ import androidx.annotation.RequiresPermission
 import com.example.photoediting.ui.toolsfragments.*
 import com.example.photoediting.utils.FileSaveHelper
 import example.photoediting.R
+import java.util.concurrent.Executors
 
 class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,
     PropertiesBSFragment.Properties, ShapeBSFragment.Properties, EmojiListener, StickerListener,
     OnItemSelected, FilterListener {
 
+    //Init Variables
     var mPhotoEditor: PhotoEditor? = null
     private var mPhotoEditorView: PhotoEditorView? = null
     private var mPropertiesBSFragment: PropertiesBSFragment? = null
@@ -82,6 +87,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_edit_image)
+
         initViews()
         handleIntentImage(mPhotoEditorView?.source)
         mWonderFont = Typeface.createFromAsset(assets, "beyond_wonderland.ttf")
@@ -103,6 +109,9 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         // NOTE(lucianocheng): Used to set integration testing parameters to PhotoEditor
         val pinchTextScalable = intent.getBooleanExtra(PINCH_TEXT_SCALABLE_INTENT_KEY, true)
 
+        // NOTE Get Image URL from Detail Activity
+        val photoUrl = intent.getStringExtra(DetailActivity.EXTRA_PHOTO)
+
         //Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
         //Typeface mEmojiTypeFace = Typeface.createFromAsset(getAssets(), "emojione-android.ttf");
         mPhotoEditor = mPhotoEditorView?.run {
@@ -115,7 +124,24 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         mPhotoEditor?.setOnPhotoEditorListener(this)
 
         //Set Image Dynamically //TODO
-        mPhotoEditorView?.source?.setImageResource(R.drawable.paris_tower)
+
+        val executor = Executors.newSingleThreadExecutor()
+        val handler = Handler(Looper.getMainLooper())
+        var image: Bitmap? = null
+        executor.execute {
+            val imageURL = photoUrl
+            try {
+                val `in` = java.net.URL(imageURL).openStream()
+                image = BitmapFactory.decodeStream(`in`)
+                handler.post{
+                    mPhotoEditorView?.source?.setImageBitmap(image)
+                }
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+        }
+        mPhotoEditorView?.source?.setImageResource(R.drawable.blank_image)
         mSaveFileHelper = FileSaveHelper(this)
     }
 
@@ -226,6 +252,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }
     }
 
+    // TODO : Coba agar bisa upload ke API
     private fun shareImage() {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "image/*"
@@ -469,5 +496,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         private const val PICK_REQUEST = 53
         const val ACTION_NEXTGEN_EDIT = "action_nextgen_edit"
         const val PINCH_TEXT_SCALABLE_INTENT_KEY = "PINCH_TEXT_SCALABLE"
+        const val EXTRA_PHOTO = "extra_photo"
     }
 }

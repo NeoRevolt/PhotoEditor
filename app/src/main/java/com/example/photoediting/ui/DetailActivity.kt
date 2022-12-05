@@ -25,8 +25,13 @@ class DetailActivity : AppCompatActivity() {
             .into(binding.ivSelectedImage)
 
         binding.btnSelectedImage.setOnClickListener {
-            val intent = Intent(this, EditImageActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, EditImageActivity::class.java)
+//            startActivity(intent)
+
+            Intent(this, EditImageActivity::class.java).also {
+                it.putExtra(EditImageActivity.EXTRA_PHOTO, photoUrl)
+                startActivity(it)
+            }
         }
     }
 
