@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
@@ -17,12 +18,22 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.photoediting.remote.ApiConfig
+import com.example.photoediting.remote.GetAllStoryResponse
+import com.example.photoediting.remote.ListStoryItem
 import example.photoediting.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class StickerBSFragment : BottomSheetDialogFragment() {
+
+    val listStoryItem = ArrayList<ListStoryItem>()
+
     private var mStickerListener: StickerListener? = null
     fun setStickerListener(stickerListener: StickerListener?) {
         mStickerListener = stickerListener
+//        setStory()
     }
 
     interface StickerListener {
@@ -56,7 +67,51 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         val stickerAdapter = StickerAdapter()
         rvEmoji.adapter = stickerAdapter
         rvEmoji.setHasFixedSize(true)
-        rvEmoji.setItemViewCacheSize(stickerPathList.size)
+//        rvEmoji.setItemViewCacheSize(stickerPathList.size)
+        rvEmoji.setItemViewCacheSize(listStoryItem.size)
+
+        setStory()
+    }
+
+    private fun setStory() {
+        val service = ApiConfig.getApiService(this@StickerBSFragment.requireContext()).getAllStory(10, 0)
+        service.enqueue(object : Callback<GetAllStoryResponse> {
+            override fun onResponse(
+                call: Call<GetAllStoryResponse>,
+                response: Response<GetAllStoryResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null && !responseBody.error) {
+                        response.body()?.listStory?.let { listStoryItem.addAll(it) }
+                        listStoryItem.addAll(responseBody.listStory)
+
+//                        adapter.setList(response.body()!!.listStory)
+
+                        Toast.makeText(
+                            this@StickerBSFragment.requireContext(),
+                            "Berhasil Mendapatkan Sticker",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@StickerBSFragment.requireContext(),
+                            response.message(),
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<GetAllStoryResponse>, t: Throwable) {
+                Toast.makeText(
+                    this@StickerBSFragment.requireContext(),
+                    "Gagal mendapatkan Sticker",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     inner class StickerAdapter : RecyclerView.Adapter<StickerAdapter.ViewHolder>() {
@@ -68,25 +123,35 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             // Load sticker image from remote url
             Glide.with(requireContext())
-                    .asBitmap()
-                    .load(stickerPathList[position])
+//                    .asBitmap()
+//                    .load(stickerPathList[position].photoUrl)
+                    .load(listStoryItem[position].photoUrl)
                     .into(holder.imgSticker)
+
+
         }
 
         override fun getItemCount(): Int {
-            return stickerPathList.size
+//            return stickerPathList.size
+            return listStoryItem.size
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val imgSticker: ImageView = itemView.findViewById(R.id.imgSticker)
 
+            fun bind(image : ListStoryItem){
+                Glide.with(itemView.context)
+                    .load(image.photoUrl)
+                    .into(itemView.findViewById(R.id.imgSticker))
+            }
             init {
                 itemView.setOnClickListener {
                     if (mStickerListener != null) {
                         Glide.with(requireContext())
                                 .asBitmap()
-                                .load(stickerPathList[layoutPosition])
-                                .into(object : CustomTarget<Bitmap?>(256, 256) {
+//                                .load(stickerPathList[layoutPosition].photoUrl)
+                            .load(listStoryItem[layoutPosition].photoUrl)
+                            .into(object : CustomTarget<Bitmap?>(256, 256) {
                                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
                                         mStickerListener!!.onStickerClick(resource)
                                     }
@@ -98,11 +163,12 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                 }
             }
         }
+
     }
 
     companion object {
         // Image Urls from flaticon(https://www.flaticon.com/stickers-pack/food-289)
-        private val stickerPathList = arrayOf(
+        private val stickerPathList2 = arrayOf(
                 "https://cdn-icons-png.flaticon.com/256/4392/4392452.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392455.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392459.png",
@@ -113,5 +179,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                 "https://cdn-icons-png.flaticon.com/256/4392/4392471.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392522.png",
         )
+//        private val stickerPathList = ArrayList<ListStoryItem>()
     }
 }
