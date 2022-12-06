@@ -86,15 +86,8 @@ class RemoteImagesActivity : AppCompatActivity() {
             rvImages.layoutManager = LinearLayoutManager(this@RemoteImagesActivity)
             rvImages.setHasFixedSize(true)
             rvImages.adapter = adapter
-
-            //TODO
             adapter.setOnItemClickCallback(object : RemoteImagesAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: ListStoryItem) {
-//                    Toast.makeText(
-//                        this@RemoteImagesActivity,
-//                        data.description,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
                     Intent(this@RemoteImagesActivity, DetailActivity::class.java).also {
                         it.putExtra(DetailActivity.EXTRA_PHOTO, data.photoUrl)
                         startActivity(it)
@@ -103,7 +96,6 @@ class RemoteImagesActivity : AppCompatActivity() {
             })
         }
     }
-
 
     private fun showLoading(state: Boolean) {
         if (state) {

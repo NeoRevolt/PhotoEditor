@@ -19,6 +19,7 @@ import android.view.View
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AlertDialog
 import com.example.photoediting.base.BaseActivity
@@ -52,9 +53,21 @@ import java.io.File
 import java.io.IOException
 import java.lang.Exception
 import androidx.annotation.RequiresPermission
+import com.example.photoediting.remote.AddNewStoryResponse
+import com.example.photoediting.remote.ApiConfig
 import com.example.photoediting.ui.toolsfragments.*
 import com.example.photoediting.utils.FileSaveHelper
+import com.example.photoediting.utils.reduceFileImage
+import com.example.photoediting.utils.uriToFile
 import example.photoediting.R
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.concurrent.Executors
 
 class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickListener,
@@ -78,6 +91,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
     private var mRootView: ConstraintLayout? = null
     private val mConstraintSet = ConstraintSet()
     private var mIsFilterVisible = false
+
+    private var getFile: File? = null
 
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
@@ -142,6 +157,60 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }
         mPhotoEditorView?.source?.setImageResource(R.drawable.blank_image)
         mSaveFileHelper = FileSaveHelper(this)
+    }
+
+    private fun uploadImage(){
+        if (getFile != null){
+            val file = reduceFileImage(getFile as File)
+            val isi = "no capt"
+
+            val description = isi.toRequestBody("text/plain".toMediaType())
+            val requestImageFile = file.asRequestBody("image/png".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
+
+            val service = ApiConfig.getApiService(this).uploadStory(imageMultipart, description)
+            service.enqueue(object : Callback<AddNewStoryResponse>{
+                override fun onResponse(
+                    call: Call<AddNewStoryResponse>,
+                    response: Response<AddNewStoryResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null && !responseBody.error) {
+                            Toast.makeText(
+                                this@EditImageActivity,
+                                responseBody.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Intent(this@EditImageActivity, RemoteImagesActivity::class.java).also {
+                                startActivity(it)
+                            }
+                        }
+                    } else {
+                        Toast.makeText(this@EditImageActivity, response.message(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+
+                override fun onFailure(call: Call<AddNewStoryResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@EditImageActivity,
+                        "Gagal instance Retrofit",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
+        }else {
+            Toast.makeText(
+                this,
+                "Silakan masukkan berkas gambar terlebih dahulu.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun handleIntentImage(source: ImageView?) {
@@ -237,7 +306,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
             R.id.imgRedo -> mPhotoEditor?.redo()
             R.id.imgSave -> saveImage()
             R.id.imgClose -> onBackPressed()
-            R.id.imgShare -> shareImage()
+//            R.id.imgShare -> shareImage()
+            R.id.imgShare -> uploadImage()
             R.id.imgCamera -> {
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(cameraIntent, CAMERA_REQUEST)
@@ -315,6 +385,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                                     showSnackbar("Image Saved Successfully")
                                     mSaveImageUri = uri
                                     mPhotoEditorView?.source?.setImageURI(mSaveImageUri)
+                                    val myFile = mSaveImageUri?.let { uriToFile(it,this@EditImageActivity)}
+                                    getFile = myFile
                                 }
 
                                 override fun onFailure(exception: Exception) {
@@ -347,10 +419,15 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 PICK_REQUEST -> try {
                     mPhotoEditor?.clearAllViews()
                     val uri = data?.data
+
+                    val selectedImg: Uri = data?.data as Uri
+                    val myFile = uriToFile(selectedImg, this)
+
                     val bitmap = MediaStore.Images.Media.getBitmap(
                         contentResolver, uri
                     )
                     mPhotoEditorView?.source?.setImageBitmap(bitmap)
+                    getFile = myFile
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -498,5 +575,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         const val ACTION_NEXTGEN_EDIT = "action_nextgen_edit"
         const val PINCH_TEXT_SCALABLE_INTENT_KEY = "PINCH_TEXT_SCALABLE"
         const val EXTRA_PHOTO = "extra_photo"
+
+        private val REQUEST_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private const val REQUEST_CODE_PERMISSION = 10
     }
 }
