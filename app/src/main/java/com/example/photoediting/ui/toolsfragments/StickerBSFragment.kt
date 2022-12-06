@@ -2,6 +2,7 @@ package com.example.photoediting.ui.toolsfragments
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -33,7 +34,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     private var mStickerListener: StickerListener? = null
     fun setStickerListener(stickerListener: StickerListener?) {
         mStickerListener = stickerListener
-//        setStory()
     }
 
     interface StickerListener {
@@ -52,6 +52,8 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
+        setStory()
+
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.fragment_bottom_sticker_emoji_dialog, null)
         dialog.setContentView(contentView)
@@ -69,8 +71,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         rvEmoji.setHasFixedSize(true)
 //        rvEmoji.setItemViewCacheSize(stickerPathList.size)
         rvEmoji.setItemViewCacheSize(listStoryItem.size)
-
-        setStory()
     }
 
     private fun setStory() {
@@ -140,11 +140,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val imgSticker: ImageView = itemView.findViewById(R.id.imgSticker)
 
-            fun bind(image : ListStoryItem){
-                Glide.with(itemView.context)
-                    .load(image.photoUrl)
-                    .into(itemView.findViewById(R.id.imgSticker))
-            }
             init {
                 itemView.setOnClickListener {
                     if (mStickerListener != null) {
