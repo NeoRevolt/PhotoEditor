@@ -124,7 +124,6 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         mPhotoEditor?.setOnPhotoEditorListener(this)
 
         //Set Image Dynamically //TODO
-
         val executor = Executors.newSingleThreadExecutor()
         val handler = Handler(Looper.getMainLooper())
         var image: Bitmap? = null
@@ -278,6 +277,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         )
     }
 
+
+    // TODO : Coba agar bisa save ke gallery atau remote
     @RequiresPermission(allOf = [Manifest.permission.WRITE_EXTERNAL_STORAGE])
     private fun saveImage() {
         val fileName = System.currentTimeMillis().toString() + ".png"
