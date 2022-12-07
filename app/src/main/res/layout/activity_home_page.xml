@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.example.photoediting.ui.HomePageActivity">
 
     <androidx.cardview.widget.CardView
+        app:cardBackgroundColor="@color/colorSecondaryDark"
         android:id="@+id/btn_searchFromServer"
         android:layout_width="300dp"
         android:layout_height="100dp"
@@ -29,7 +31,7 @@
                 android:id="@+id/id_cloudIc"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_outline_cloud_24_black"
+                android:src="@drawable/ic_outline_cloud_24_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -40,7 +42,7 @@
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Cari dari Cloud/API"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/id_cloudIc"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +55,7 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/btn_searchFromGallery"
+        android:backgroundTint="@color/colorSecondaryDark"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
@@ -73,7 +76,7 @@
                 android:id="@+id/id_galleryIc"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_outline_image_24_black"
+                android:src="@drawable/ic_outline_image_24_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -84,7 +87,7 @@
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_medium"
                 android:text="Cari dari Gallery"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/id_galleryIc"
                 app:layout_constraintEnd_toEndOf="parent"

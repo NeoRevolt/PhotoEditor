@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:padding="4dp"
-    tools:background="@android:color/black">
-
+    tools:background="@android:color/black"
+    android:foreground="?attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/imgToolIcon"

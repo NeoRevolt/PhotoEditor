@@ -17,12 +17,20 @@ class DetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val photoUrl = intent.getStringExtra(EXTRA_PHOTO)
+        val author = intent.getStringExtra(EXTRA_AUTHOR)
+        val desc = intent.getStringExtra(EXTRA_DESC)
+        val date = intent.getStringExtra(EXTRA_DATE)
 
         Glide.with(this)
             .load(photoUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
             .fitCenter()
             .into(binding.ivSelectedImage)
+        binding.apply {
+            tvAuthor.text = "Author : $author"
+            tvDesc.text = "Description : $desc"
+            tvDate.text = "Date : $date"
+        }
 
         binding.btnSelectedImage.setOnClickListener {
 //            val intent = Intent(this, EditImageActivity::class.java)
@@ -37,6 +45,9 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_PHOTO = "extra_photo"
+        const val EXTRA_AUTHOR = "extra_author"
+        const val EXTRA_DESC = "extra_desc"
+        const val EXTRA_DATE = "extra_date"
     }
 
 }

@@ -39,7 +39,7 @@ class RemoteImagesActivity : AppCompatActivity() {
 
     private fun setStory() {
         showLoading(true)
-        val service = ApiConfig.getApiService(this).getAllStory(6, 0)
+        val service = ApiConfig.getApiService(this).getAllStory(20, 0)
         service.enqueue(object : Callback<GetAllStoryResponse> {
             override fun onResponse(
                 call: Call<GetAllStoryResponse>,
@@ -90,6 +90,9 @@ class RemoteImagesActivity : AppCompatActivity() {
                 override fun onItemClicked(data: ListStoryItem) {
                     Intent(this@RemoteImagesActivity, DetailActivity::class.java).also {
                         it.putExtra(DetailActivity.EXTRA_PHOTO, data.photoUrl)
+                        it.putExtra(DetailActivity.EXTRA_AUTHOR, data.name)
+                        it.putExtra(DetailActivity.EXTRA_DESC, data.description)
+                        it.putExtra(DetailActivity.EXTRA_DATE, data.createdAt)
                         startActivity(it)
                     }
                 }
