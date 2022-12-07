@@ -7,6 +7,19 @@
     android:background="@color/colorPrimaryDark"
     tools:context="com.example.photoediting.ui.HomePageActivity">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/btn_searchFromServer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="50dp"
+        android:text="Edit image from"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        />
+
     <androidx.cardview.widget.CardView
         app:cardBackgroundColor="@color/colorSecondaryDark"
         android:id="@+id/btn_searchFromServer"
@@ -39,13 +52,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Cari dari Cloud/API"
+                android:text="Remote Cloud/API"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/id_cloudIc"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/id_cloudIc"
                 app:layout_constraintTop_toTopOf="@id/id_cloudIc" />
 
@@ -86,11 +97,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:fontFamily="@font/roboto_medium"
-                android:text="Cari dari Gallery"
+                android:text="Local/Gallery"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="@id/id_galleryIc"
-                app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintStart_toEndOf="@id/id_galleryIc"
                 app:layout_constraintTop_toTopOf="@id/id_galleryIc" />
 

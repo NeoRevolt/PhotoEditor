@@ -47,6 +47,7 @@ class DetailActivity : AppCompatActivity() {
 
             Intent(this, EditImageActivity::class.java).also {
                 it.putExtra(EditImageActivity.EXTRA_PHOTO, photoUrl)
+                it.putExtra(EditImageActivity.EXTRA_REQ, "remote")
                 startActivity(it)
             }
         }

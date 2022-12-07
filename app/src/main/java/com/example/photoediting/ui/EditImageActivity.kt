@@ -130,6 +130,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
 
         // NOTE Get Image URL from Detail Activity
         val photoUrl = intent.getStringExtra(DetailActivity.EXTRA_PHOTO)
+        val requestCode = intent.getStringExtra(HomePageActivity.EXTRA_REQ)
 
         //Typeface mTextRobotoTf = ResourcesCompat.getFont(this, R.font.roboto_medium);
         //Typeface mEmojiTypeFace = Typeface.createFromAsset(getAssets(), "emojione-android.ttf");
@@ -142,25 +143,54 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }
         mPhotoEditor?.setOnPhotoEditorListener(this)
 
-        //Set Image Dynamically //TODO
-        val executor = Executors.newSingleThreadExecutor()
-        val handler = Handler(Looper.getMainLooper())
-        var image: Bitmap? = null
-        executor.execute {
-            val imageURL = photoUrl
-            try {
-                showLoading(true)
-                val `in` = java.net.URL(imageURL).openStream()
-                image = BitmapFactory.decodeStream(`in`)
-                handler.post{
-                    showLoading(false)
-                    mPhotoEditorView?.source?.setImageBitmap(image)
+        //TODO NOTE : Langsung mengambil gambar dari gallery
+        if (requestCode == "gallery"){
+            val intent = Intent()
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_REQUEST)
+            showLoading(false)
+        } else if (requestCode == "remote"){
+            val executor = Executors.newSingleThreadExecutor()
+            val handler = Handler(Looper.getMainLooper())
+            var image: Bitmap? = null
+            executor.execute {
+                val imageURL = photoUrl
+                try {
+                    showLoading(true)
+                    val `in` = java.net.URL(imageURL).openStream()
+                    image = BitmapFactory.decodeStream(`in`)
+                    handler.post{
+                        showLoading(false)
+                        mPhotoEditorView?.source?.setImageBitmap(image)
+                    }
+                }
+                catch (e: Exception){
+                    e.printStackTrace()
                 }
             }
-            catch (e: Exception){
-                e.printStackTrace()
-            }
         }
+        showLoading(false)
+
+        //Set Image Dynamically //TODO
+//        val executor = Executors.newSingleThreadExecutor()
+//        val handler = Handler(Looper.getMainLooper())
+//        var image: Bitmap? = null
+//        executor.execute {
+//            val imageURL = photoUrl
+//            try {
+//                showLoading(true)
+//                val `in` = java.net.URL(imageURL).openStream()
+//                image = BitmapFactory.decodeStream(`in`)
+//                handler.post{
+//                    showLoading(false)
+//                    mPhotoEditorView?.source?.setImageBitmap(image)
+//                }
+//            }
+//            catch (e: Exception){
+//                e.printStackTrace()
+//            }
+//        }
         mPhotoEditorView?.source?.setImageResource(R.drawable.blank_image)
         mSaveFileHelper = FileSaveHelper(this)
     }
@@ -177,7 +207,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 file.name,
                 requestImageFile
             )
-
+            showLoading(true)
             val service = ApiConfig.getApiService(this).uploadStory(imageMultipart, description)
             service.enqueue(object : Callback<AddNewStoryResponse>{
                 override fun onResponse(
@@ -185,6 +215,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                     response: Response<AddNewStoryResponse>
                 ) {
                     if (response.isSuccessful) {
+                        showLoading(false)
                         val responseBody = response.body()
                         if (responseBody != null && !responseBody.error) {
                             Toast.makeText(
@@ -194,9 +225,11 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                             ).show()
                             Intent(this@EditImageActivity, RemoteImagesActivity::class.java).also {
                                 startActivity(it)
+                                finish()
                             }
                         }
                     } else {
+                        showLoading(false)
                         Toast.makeText(this@EditImageActivity, response.message(), Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -205,7 +238,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                 override fun onFailure(call: Call<AddNewStoryResponse>, t: Throwable) {
                     Toast.makeText(
                         this@EditImageActivity,
-                        "Gagal instance Retrofit",
+                        "Failed to connect",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -213,7 +246,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }else {
             Toast.makeText(
                 this,
-                "Silakan masukkan berkas gambar terlebih dahulu.",
+                "Please save the image first !.",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -590,6 +623,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         const val ACTION_NEXTGEN_EDIT = "action_nextgen_edit"
         const val PINCH_TEXT_SCALABLE_INTENT_KEY = "PINCH_TEXT_SCALABLE"
         const val EXTRA_PHOTO = "extra_photo"
+        const val EXTRA_REQ = "extra_req"
 
         private val REQUEST_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSION = 10

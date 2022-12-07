@@ -47,9 +47,8 @@ class LoginActivity : AppCompatActivity() {
         myEnterButton = findViewById(R.id.id_my_button)
         myEmailEditText = findViewById(R.id.id_my_email_et)
         myPassEditText = findViewById(R.id.id_my_pass_et)
-        edToRegister = findViewById(R.id.id_register_tv)
         progressBar = findViewById(R.id.progress_bar)
-
+        
         setMyButtonEnable()
 
         sessionManager = SessionManager(this)
@@ -61,6 +60,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(i)
             finish()
         }
+
 
         myEmailEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
@@ -93,10 +93,10 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        edToRegister.setOnClickListener {
-            val i = Intent(this, EditImageActivity::class.java)
-            startActivity(i)
-        }
+//        edToRegister.setOnClickListener {
+//            val i = Intent(this, EditImageActivity::class.java)
+//            startActivity(i)
+//        }
 
 //        showLoading(true)
     }

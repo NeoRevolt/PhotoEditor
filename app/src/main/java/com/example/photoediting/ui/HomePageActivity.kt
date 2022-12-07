@@ -24,9 +24,14 @@ class HomePageActivity : AppCompatActivity() {
         }
 
         btnFromGallery.setOnClickListener {
-            val intent = Intent(this, EditImageActivity::class.java)
-            startActivity(intent)
+            Intent(this, EditImageActivity::class.java).also {
+                it.putExtra(EditImageActivity.EXTRA_REQ, "gallery")
+                startActivity(it)
+            }
         }
+    }
 
+    companion object{
+        const val EXTRA_REQ = "extra_req"
     }
 }
