@@ -7,6 +7,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.photoediting.remote.ListStoryItem
 import example.photoediting.databinding.ItemRemoteImagesBinding
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>() {
 
@@ -25,6 +28,7 @@ class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>
 
     class ViewHolder(private val binding: ItemRemoteImagesBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(story: ListStoryItem){
             binding.apply {
                 Glide.with(itemView)
@@ -32,7 +36,11 @@ class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
                     .into(imgItemPhoto)
-                tvItemName.text = story.createdAt
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val date2 = story.createdAt.let { dateFormat.parse(it) }
+                val formatter2 = SimpleDateFormat("dd/MM/yy'  'HH:mm:ss")
+                val dateStr = date2?.let { formatter2.format(it) }
+                tvItemName.text = dateStr
 //                tvItemDesk.text = story.description
             }
         }

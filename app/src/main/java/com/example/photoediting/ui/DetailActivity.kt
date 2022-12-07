@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import example.photoediting.databinding.ActivityDetailBinding
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class DetailActivity : AppCompatActivity() {
 
@@ -21,6 +24,12 @@ class DetailActivity : AppCompatActivity() {
         val desc = intent.getStringExtra(EXTRA_DESC)
         val date = intent.getStringExtra(EXTRA_DATE)
 
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val date2 = date?.let { dateFormat.parse(it) }
+        val formatter2 = SimpleDateFormat("dd/MM/yy'  'HH:mm:ss")
+        val dateStr = date2?.let { formatter2.format(it) }
+
         Glide.with(this)
             .load(photoUrl)
             .transition(DrawableTransitionOptions.withCrossFade())
@@ -29,7 +38,7 @@ class DetailActivity : AppCompatActivity() {
         binding.apply {
             tvAuthor.text = "Author : $author"
             tvDesc.text = "Description : $desc"
-            tvDate.text = "Date : $date"
+            tvDate.text = "Date : $dateStr"
         }
 
         binding.btnSelectedImage.setOnClickListener {
