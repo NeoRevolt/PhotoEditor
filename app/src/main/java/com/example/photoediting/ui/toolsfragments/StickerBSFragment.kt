@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.photoediting.remote.ApiConfig
@@ -53,14 +55,14 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
         setStory()
-
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.fragment_bottom_sticker_emoji_dialog, null)
         dialog.setContentView(contentView)
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
-            behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
+//            behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
+            behavior.addBottomSheetCallback(mBottomSheetBehaviorCallback)
         }
         (contentView.parent as View).setBackgroundColor(resources.getColor(android.R.color.transparent))
         val rvEmoji: RecyclerView = contentView.findViewById(R.id.rvEmoji)
@@ -86,14 +88,9 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                         listStoryItem.clear()
                         response.body()?.listStory?.let { listStoryItem.addAll(it) }
 //                        listStoryItem.addAll(responseBody.listStory)
-
 //                        adapter.setList(response.body()!!.listStory)
+                        Log.d("Sticker Status : ", "Berhasil mendapatkan stiker")
 
-                        Toast.makeText(
-                            this@StickerBSFragment.requireContext(),
-                            "Berhasil Mendapatkan Sticker",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     } else {
                         Toast.makeText(
                             this@StickerBSFragment.requireContext(),
@@ -124,12 +121,10 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             // Load sticker image from remote url
             Glide.with(requireContext())
-//                    .asBitmap()
+                    .asBitmap()
 //                    .load(stickerPathList[position].photoUrl)
                     .load(listStoryItem[position].photoUrl)
                     .into(holder.imgSticker)
-
-
         }
 
         override fun getItemCount(): Int {

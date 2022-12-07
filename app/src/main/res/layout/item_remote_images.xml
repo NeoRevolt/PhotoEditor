@@ -6,14 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="start"
-    android:layout_margin="20dp"
-    card_view:cardBackgroundColor="@color/white"
-    card_view:cardCornerRadius="10dp">
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    card_view:cardBackgroundColor="#1E1E1E"
+    card_view:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="0dp"
         android:padding="0dp">
 
         <ImageView
@@ -21,43 +24,46 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             card_view:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            tools:src="@tools:sample/avatars"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"/>
 
         <TextView
+            android:gravity="end"
             android:id="@+id/tv_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_toEndOf="@id/img_item_photo"
             android:layout_toRightOf="@id/img_item_photo"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/white"
             card_view:layout_constraintEnd_toEndOf="@id/img_item_photo"
             card_view:layout_constraintStart_toStartOf="@+id/img_item_photo"
             card_view:layout_constraintTop_toBottomOf="@+id/img_item_photo"
-            tools:text="Nama" />
+            tools:text="Date" />
 
-        <TextView
-            android:id="@+id/tv_item_desk"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_toEndOf="@id/img_item_photo"
-            android:layout_toRightOf="@id/img_item_photo"
-            android:maxLength="20"
-            android:textSize="16sp"
-            card_view:layout_constraintEnd_toEndOf="@id/tv_item_name"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"
-            tools:text="Ini adalah deskripsi" />
+<!--        <TextView-->
+<!--            android:id="@+id/tv_item_desk"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="0dp"-->
+<!--            android:layout_marginLeft="0dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginEnd="8dp"-->
+<!--            android:layout_marginRight="8dp"-->
+<!--            android:layout_toEndOf="@id/img_item_photo"-->
+<!--            android:layout_toRightOf="@id/img_item_photo"-->
+<!--            android:maxLength="20"-->
+<!--            android:textSize="16sp"-->
+<!--            card_view:layout_constraintEnd_toEndOf="@id/tv_item_name"-->
+<!--            card_view:layout_constraintStart_toStartOf="@+id/tv_item_name"-->
+<!--            card_view:layout_constraintTop_toBottomOf="@+id/tv_item_name"-->
+<!--            tools:text="Ini adalah deskripsi" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

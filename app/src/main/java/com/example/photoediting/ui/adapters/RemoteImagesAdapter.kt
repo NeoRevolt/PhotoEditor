@@ -32,8 +32,8 @@ class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
                     .into(imgItemPhoto)
-                tvItemName.text = story.name
-                tvItemDesk.text = story.description
+                tvItemName.text = story.createdAt
+//                tvItemDesk.text = story.description
             }
         }
 
