@@ -18,6 +18,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.VisibleForTesting
@@ -93,6 +94,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
     private var mIsFilterVisible = false
 
     private var getFile: File? = null
+    private lateinit var progressBar: ProgressBar
 
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
@@ -102,6 +104,8 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         super.onCreate(savedInstanceState)
         makeFullScreen()
         setContentView(R.layout.activity_edit_image)
+
+        progressBar = findViewById(R.id.progress_bar)
 
         initViews()
         handleIntentImage(mPhotoEditorView?.source)
@@ -145,9 +149,11 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         executor.execute {
             val imageURL = photoUrl
             try {
+                showLoading(true)
                 val `in` = java.net.URL(imageURL).openStream()
                 image = BitmapFactory.decodeStream(`in`)
                 handler.post{
+                    showLoading(false)
                     mPhotoEditorView?.source?.setImageBitmap(image)
                 }
             }
@@ -566,6 +572,15 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
             super.onBackPressed()
         }
     }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+        }
+    }
+
 
     companion object {
         private val TAG = EditImageActivity::class.java.simpleName

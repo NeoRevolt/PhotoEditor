@@ -55,7 +55,7 @@ class RemoteImagesActivity : AppCompatActivity() {
 
                         Toast.makeText(
                             this@RemoteImagesActivity,
-                            "Welcome Back",
+                            "${listStoryItem.size} images have been loaded",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {

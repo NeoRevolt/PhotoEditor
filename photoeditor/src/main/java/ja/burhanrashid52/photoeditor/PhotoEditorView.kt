@@ -67,7 +67,7 @@ class PhotoEditorView @JvmOverloads constructor(
         mImgSource.id = imgSrcId
         mImgSource.adjustViewBounds = true
         //TODO NOTE (Neo): Ubah apabila ukuran gambar yang diedit berubah.
-        mImgSource.scaleType = ImageView.ScaleType.CENTER_CROP
+        mImgSource.scaleType = ImageView.ScaleType.FIT_CENTER
 
         attrs?.let {
             val a = context.obtainStyledAttributes(it, R.styleable.PhotoEditorView)

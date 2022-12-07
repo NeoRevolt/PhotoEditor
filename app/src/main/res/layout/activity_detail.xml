@@ -41,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:text="Author :"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:justificationMode="inter_word"/>
 
                 <TextView
                     android:id="@+id/tv_desc"
@@ -49,7 +50,8 @@
                     android:layout_height="wrap_content"
                     android:text="Description :"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:justificationMode="inter_word"/>
 
                 <TextView
                     android:id="@+id/tv_date"
@@ -57,7 +59,8 @@
                     android:layout_height="wrap_content"
                     android:text="Date :"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:justificationMode="inter_word"/>
             </LinearLayout>
         </LinearLayout>
 

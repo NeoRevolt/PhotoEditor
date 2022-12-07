@@ -36,9 +36,9 @@ class DetailActivity : AppCompatActivity() {
             .fitCenter()
             .into(binding.ivSelectedImage)
         binding.apply {
-            tvAuthor.text = "Author : $author"
+            tvAuthor.text = "Author : @$author"
             tvDesc.text = "Description : $desc"
-            tvDate.text = "Date : $dateStr"
+            tvDate.text = "Created at : $dateStr"
         }
 
         binding.btnSelectedImage.setOnClickListener {

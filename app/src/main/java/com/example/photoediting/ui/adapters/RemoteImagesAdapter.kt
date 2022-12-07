@@ -36,6 +36,7 @@ class RemoteImagesAdapter : RecyclerView.Adapter<RemoteImagesAdapter.ViewHolder>
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .fitCenter()
                     .into(imgItemPhoto)
+                tvAuthor.text = "@${story.name}"
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
                 val date2 = story.createdAt.let { dateFormat.parse(it) }
                 val formatter2 = SimpleDateFormat("dd/MM/yy'  'HH:mm:ss")
