@@ -39,7 +39,7 @@ class RemoteImagesActivity : AppCompatActivity() {
 
     private fun setStory() {
         showLoading(true)
-        val service = ApiConfig.getApiService(this).getAllStory(20, 0)
+        val service = ApiConfig.getApiService(this).getAllStory(30, 0)
         service.enqueue(object : Callback<GetAllStoryResponse> {
             override fun onResponse(
                 call: Call<GetAllStoryResponse>,
