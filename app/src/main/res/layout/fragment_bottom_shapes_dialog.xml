@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
 
     <RadioGroup
         android:id="@+id/shapeRadioGroup"
@@ -21,24 +22,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:text="@string/label_brush" />
 
         <RadioButton
             android:id="@+id/lineRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:text="@string/label_line" />
 
         <RadioButton
             android:id="@+id/ovalRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:text="@string/label_oval" />
 
         <RadioButton
             android:id="@+id/rectRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/white"
+            android:textColor="@color/white"
             android:text="@string/label_rectangle" />
 
     </RadioGroup>
@@ -51,11 +60,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:progress="25"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/white"
+        android:thumbTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtShapeSize" />
 
     <SeekBar
+        android:visibility="gone"
         android:id="@+id/shapeOpacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,6 +77,9 @@
         android:layout_marginEnd="8dp"
         android:max="255"
         android:progress="255"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/white"
+        android:thumbTint="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtOpacity" />
@@ -73,21 +89,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:text="Brush"
+        android:textColor="@color/white"
+        android:text="Brush/Size"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shapeRadioGroup" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/txtOpacity"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="42dp"
         android:layout_marginEnd="8dp"
+        android:textColor="@color/white"
         android:text="Opacity"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,6 +120,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:textColor="@color/white"
         android:text="Shape"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -115,15 +135,15 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/shapeOpacity"
+        app:layout_constraintTop_toBottomOf="@id/txtShapeSize"
         tools:background="@android:color/black"
         tools:listitem="@layout/color_picker_item_list" />
 

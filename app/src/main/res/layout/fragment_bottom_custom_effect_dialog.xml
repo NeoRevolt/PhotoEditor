@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
 
     <SeekBar
         android:id="@+id/sbRotate"
@@ -14,6 +15,9 @@
         android:layout_marginTop="8dp"
         android:max="100"
         android:progress="0"
+        android:progressBackgroundTint="@color/white"
+        android:progressTint="@color/white"
+        android:thumbTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRotation" />
@@ -26,6 +30,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Rotation"
+        android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

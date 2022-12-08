@@ -41,7 +41,7 @@ class DetailActivity : AppCompatActivity() {
             tvDate.text = "Created at : $dateStr"
         }
 
-        binding.btnSelectedImage.setOnClickListener {
+        binding.btnTextSelectTv.setOnClickListener {
 //            val intent = Intent(this, EditImageActivity::class.java)
 //            startActivity(intent)
 

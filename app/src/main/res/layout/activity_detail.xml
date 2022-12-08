@@ -70,26 +70,42 @@
 
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/btn_selectedImage"
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/btn_selectedImage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        app:cardBackgroundColor="@color/white"-->
+<!--        android:background="@color/colorPrimaryDark"-->
+<!--        android:foreground="?attr/selectableItemBackground"-->
+<!--        app:cardCornerRadius="15dp"-->
+<!--        app:cardElevation="15dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:padding="3dp"-->
+<!--            android:src="@drawable/ic_baseline_check_24_black" />-->
+
+<!--    </androidx.cardview.widget.CardView>-->
+
+    <TextView
+        android:id="@+id/btn_text_select_tv"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        app:cardBackgroundColor="@color/white"
-        android:background="@color/colorPrimaryDark"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_border_text_view"
         android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="15dp"
+        android:padding="10dp"
+        android:text="Select"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:padding="3dp"
-            android:src="@drawable/ic_baseline_check_24_black" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
