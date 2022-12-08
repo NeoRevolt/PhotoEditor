@@ -246,7 +246,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }else {
             Toast.makeText(
                 this,
-                "Please save the image first !.",
+                "Please save the image first",
                 Toast.LENGTH_SHORT
             ).show()
         }

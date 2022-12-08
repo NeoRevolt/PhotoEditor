@@ -113,7 +113,7 @@ class LoginActivity : AppCompatActivity() {
                 val responseBody = response.body()
                 if (response.isSuccessful) {
                     showLoading(false)
-                    Toast.makeText(this@LoginActivity, responseBody?.message, Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginActivity, "Welcome", Toast.LENGTH_SHORT)
                         .show()
                     if (responseBody != null) {
                         setSession(responseBody.loginResult)
@@ -131,7 +131,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                 showLoading(false)
-                Toast.makeText(this@LoginActivity, "Gagal instance Retrofit", Toast.LENGTH_SHORT)
+                Toast.makeText(this@LoginActivity, "Connection Failed", Toast.LENGTH_SHORT)
                     .show()
             }
         })
