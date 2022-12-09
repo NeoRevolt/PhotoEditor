@@ -82,6 +82,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 //        rvEmoji.setItemViewCacheSize(stickerPathList.size)
 //        rvEmoji.setItemViewCacheSize(listStoryItem.size)
 
+        //TODO : Try to fix the logic for sticker
         mIconViewModel = ViewModelProvider(this).get(IconViewModel::class.java)
         mIconViewModel.deleteIconFromDB()
         addIconToDatabase()
