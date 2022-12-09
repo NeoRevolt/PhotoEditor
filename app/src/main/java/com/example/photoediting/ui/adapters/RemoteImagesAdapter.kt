@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.photoediting.remote.ListStoryItem
+import com.example.photoediting.data.remote.ListStoryItem
 import example.photoediting.databinding.ItemRemoteImagesBinding
 import java.text.SimpleDateFormat
 import java.util.*

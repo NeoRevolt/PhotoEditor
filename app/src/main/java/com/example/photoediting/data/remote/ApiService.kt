@@ -1,4 +1,4 @@
-package com.example.photoediting.remote
+package com.example.photoediting.data.remote
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody

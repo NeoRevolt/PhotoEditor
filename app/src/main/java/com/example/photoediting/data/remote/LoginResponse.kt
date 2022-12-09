@@ -1,4 +1,4 @@
-package com.example.photoediting.remote
+package com.example.photoediting.data.remote
 
 import com.google.gson.annotations.SerializedName
 

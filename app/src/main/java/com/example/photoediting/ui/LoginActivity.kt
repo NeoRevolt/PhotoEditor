@@ -11,10 +11,10 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import com.example.photoediting.remote.ApiConfig
-import com.example.photoediting.remote.LoginResponse
-import com.example.photoediting.remote.LoginResult
-import com.example.photoediting.remote.SessionManager
+import com.example.photoediting.data.remote.ApiConfig
+import com.example.photoediting.data.remote.LoginResponse
+import com.example.photoediting.data.remote.LoginResult
+import com.example.photoediting.data.remote.SessionManager
 import com.example.photoediting.ui.customui.MyButton
 import com.example.photoediting.ui.customui.MyEditText
 import com.example.photoediting.ui.customui.MyPassEditText

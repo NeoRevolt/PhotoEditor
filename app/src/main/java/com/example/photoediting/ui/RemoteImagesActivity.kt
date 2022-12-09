@@ -7,9 +7,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.photoediting.remote.ApiConfig
-import com.example.photoediting.remote.GetAllStoryResponse
-import com.example.photoediting.remote.ListStoryItem
+import com.example.photoediting.data.remote.ApiConfig
+import com.example.photoediting.data.remote.GetAllStoryResponse
+import com.example.photoediting.data.remote.ListStoryItem
 import com.example.photoediting.ui.adapters.RemoteImagesAdapter
 import example.photoediting.databinding.ActivityRemoteImagesBinding
 import retrofit2.Call

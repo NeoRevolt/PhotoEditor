@@ -54,8 +54,8 @@ import java.io.File
 import java.io.IOException
 import java.lang.Exception
 import androidx.annotation.RequiresPermission
-import com.example.photoediting.remote.AddNewStoryResponse
-import com.example.photoediting.remote.ApiConfig
+import com.example.photoediting.data.remote.AddNewStoryResponse
+import com.example.photoediting.data.remote.ApiConfig
 import com.example.photoediting.ui.toolsfragments.*
 import com.example.photoediting.utils.FileSaveHelper
 import com.example.photoediting.utils.reduceFileImage

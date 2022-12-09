@@ -1,4 +1,4 @@
-package com.example.photoediting.remote
+package com.example.photoediting.data.remote
 
 import android.content.Context
 import example.photoediting.BuildConfig

@@ -12,6 +12,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -21,9 +23,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.photoediting.remote.ApiConfig
-import com.example.photoediting.remote.GetAllStoryResponse
-import com.example.photoediting.remote.ListStoryItem
+import com.example.photoediting.data.offline.IconViewModel
+import com.example.photoediting.data.offline.entity.IconEntity
+import com.example.photoediting.data.offline.room.IconsDao
+import com.example.photoediting.data.remote.ApiConfig
+import com.example.photoediting.data.remote.GetAllStoryResponse
+import com.example.photoediting.data.remote.ListStoryItem
 import example.photoediting.R
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,6 +37,8 @@ import retrofit2.Response
 class StickerBSFragment : BottomSheetDialogFragment() {
 
     val listStoryItem = ArrayList<ListStoryItem>()
+    private lateinit var mIconViewModel: IconViewModel
+
 
     private var mStickerListener: StickerListener? = null
     fun setStickerListener(stickerListener: StickerListener?) {
@@ -54,10 +61,11 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
     @SuppressLint("RestrictedApi")
     override fun setupDialog(dialog: Dialog, style: Int) {
-        setStory()
+//        setStory()
         super.setupDialog(dialog, style)
         val contentView = View.inflate(context, R.layout.fragment_bottom_sticker_emoji_dialog, null)
         dialog.setContentView(contentView)
+
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
@@ -72,8 +80,22 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         rvEmoji.adapter = stickerAdapter
         rvEmoji.setHasFixedSize(true)
 //        rvEmoji.setItemViewCacheSize(stickerPathList.size)
-        rvEmoji.setItemViewCacheSize(listStoryItem.size)
+//        rvEmoji.setItemViewCacheSize(listStoryItem.size)
+
+        mIconViewModel = ViewModelProvider(this).get(IconViewModel::class.java)
+        mIconViewModel.deleteIconFromDB()
+        addIconToDatabase()
+        mIconViewModel.readAllIcon.observe(this, Observer { icon->
+            stickerAdapter.setData(icon)
+        })
     }
+
+    private fun addIconToDatabase(){
+        mIconViewModel.addIcon(IconEntity(0,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"))
+        mIconViewModel.addIcon(IconEntity(0,"Fly","https://cdn-icons-png.flaticon.com/512/2849/2849909.png"))
+        Toast.makeText(requireContext(),"Data have been added to DB",Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun setStory() {
         val service = ApiConfig.getApiService(this@StickerBSFragment.requireContext()).getAllStory(6, 0)
@@ -113,23 +135,33 @@ class StickerBSFragment : BottomSheetDialogFragment() {
     }
 
     inner class StickerAdapter : RecyclerView.Adapter<StickerAdapter.ViewHolder>() {
+       private var iconList = emptyList<IconEntity>()
+
+        fun setData(icon: List<IconEntity>){
+            this.iconList = icon
+            notifyDataSetChanged()
+        }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.row_sticker, parent, false)
             return ViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
             // Load sticker image from remote url
             Glide.with(requireContext())
                     .asBitmap()
-//                    .load(stickerPathList[position].photoUrl)
-                    .load(listStoryItem[position].photoUrl)
+//                    .load(stickerPathList[position])
+//                    .load(listStoryItem[position].photoUrl)
+                    .load(iconList[position].iconUrl)
                     .into(holder.imgSticker)
         }
 
         override fun getItemCount(): Int {
 //            return stickerPathList.size
-            return listStoryItem.size
+            return iconList.size
+//            return listStoryItem.size
         }
 
         inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -140,8 +172,9 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                     if (mStickerListener != null) {
                         Glide.with(requireContext())
                                 .asBitmap()
-//                                .load(stickerPathList[layoutPosition].photoUrl)
-                            .load(listStoryItem[layoutPosition].photoUrl)
+//                                .load(stickerPathList[layoutPosition])
+                                .load(iconList[layoutPosition].iconUrl)
+//                            .load(listStoryItem[layoutPosition].photoUrl)
                             .into(object : CustomTarget<Bitmap?>(256, 256) {
                                     override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap?>?) {
                                         mStickerListener!!.onStickerClick(resource)
@@ -159,7 +192,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
     companion object {
         // Image Urls from flaticon(https://www.flaticon.com/stickers-pack/food-289)
-        private val stickerPathList2 = arrayOf(
+        private val stickerPathList = arrayOf(
                 "https://cdn-icons-png.flaticon.com/256/4392/4392452.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392455.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392459.png",
@@ -170,6 +203,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
                 "https://cdn-icons-png.flaticon.com/256/4392/4392471.png",
                 "https://cdn-icons-png.flaticon.com/256/4392/4392522.png",
         )
-//        private val stickerPathList = ArrayList<ListStoryItem>()
+        private val iconPestList = ArrayList<IconEntity>()
     }
 }

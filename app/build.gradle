@@ -4,16 +4,17 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     defaultConfig {
         applicationId "com.example.photoediting"
         minSdkVersion 16
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 7
         versionName "2.0.0"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        vectorDrawables.useSupportLibrary = true
         // https://stackoverflow.com/a/69043734
         configurations.all {
             resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
@@ -40,7 +41,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'com.google.android.material:material:1.5.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
     // NOTE(lucianocheng): Using the local photoeditor implementation instead of the published
     //                     maven package to faciliate testing, and for the integration tests
@@ -63,20 +63,23 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
 
-    implementation "com.github.bumptech.glide:glide:4.13.1"
+    implementation "com.github.bumptech.glide:glide:4.13.2"
 
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     implementation "androidx.paging:paging-runtime-ktx:3.1.1"
-    implementation 'androidx.room:room-ktx:2.5.0-alpha01'
-    kapt 'androidx.room:room-compiler:2.5.0-alpha01'
-    implementation 'androidx.activity:activity-ktx:1.4.0'
+    implementation 'androidx.room:room-ktx:2.5.0-beta02'
+    kapt 'androidx.room:room-compiler:2.5.0-beta02'
+    implementation 'androidx.activity:activity-ktx:1.6.1'
+
+    implementation "androidx.room:room-runtime:2.5.0-beta02"
+    kapt "androidx.room:room-compiler:2.5.0-beta02"
 }
 repositories {
     mavenCentral()

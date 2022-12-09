@@ -1,4 +1,4 @@
-package com.example.photoediting.remote
+package com.example.photoediting.data.remote
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
