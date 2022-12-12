@@ -88,12 +88,17 @@ class RemoteImagesActivity : AppCompatActivity() {
             rvImages.adapter = adapter
             adapter.setOnItemClickCallback(object : RemoteImagesAdapter.OnItemClickCallback {
                 override fun onItemClicked(data: ListStoryItem) {
-                    Intent(this@RemoteImagesActivity, DetailActivity::class.java).also {
-                        it.putExtra(DetailActivity.EXTRA_PHOTO, data.photoUrl)
-                        it.putExtra(DetailActivity.EXTRA_AUTHOR, data.name)
-                        it.putExtra(DetailActivity.EXTRA_DESC, data.description)
-                        it.putExtra(DetailActivity.EXTRA_DATE, data.createdAt)
+//                    Intent(this@RemoteImagesActivity, DetailActivity::class.java).also {
+//                        it.putExtra(DetailActivity.EXTRA_PHOTO, data.photoUrl)
+//                        it.putExtra(DetailActivity.EXTRA_AUTHOR, data.name)
+//                        it.putExtra(DetailActivity.EXTRA_DESC, data.description)
+//                        it.putExtra(DetailActivity.EXTRA_DATE, data.createdAt)
+//                        startActivity(it)
+                    Intent(this@RemoteImagesActivity, EditImageActivity::class.java).also {
+                        it.putExtra(EditImageActivity.EXTRA_PHOTO, data.photoUrl)
+                        it.putExtra(EditImageActivity.EXTRA_REQ, "remote")
                         startActivity(it)
+
                     }
                 }
             })
