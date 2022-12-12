@@ -9,7 +9,7 @@ class IconEntity(
 
     @field:ColumnInfo(name = "iconId")
     @field:PrimaryKey(autoGenerate = true)
-    val iconId: Int,
+    val iconId: Int? = null,
 
     @field:ColumnInfo(name = "iconName")
     val iconName: String,

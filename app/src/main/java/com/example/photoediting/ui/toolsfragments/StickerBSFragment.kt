@@ -85,7 +85,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
         //TODO : Try to fix the logic for sticker
         mIconViewModel = ViewModelProvider(this).get(IconViewModel::class.java)
-        if (listStoryItem.isNotEmpty()){
+        if (iconPestList.isNotEmpty()){
             mIconViewModel.deleteIconFromDB()
         }
 //        mIconViewModel.deleteIconFromDB()
@@ -101,11 +101,19 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
     private fun addIconToDatabase(){
         mIconViewModel.apply {
-            addIcon(IconEntity(3,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"));
-            addIcon(IconEntity(4,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"));
+            addIcon(IconEntity(null,"Fly","https://cdn-icons-png.flaticon.com/512/2849/2849909.png"));
+            addIcon(IconEntity(null,"Ant","https://cdn-icons-png.flaticon.com/512/1850/1850279.png"));
+            addIcon(IconEntity(null,"Bug","https://cdn-icons-png.flaticon.com/512/854/854649.png"));
+            addIcon(IconEntity(null,"Centipede","https://cdn-icons-png.flaticon.com/512/1850/1850261.png"));
+            addIcon(IconEntity(null,"Roach","https://cdn-icons-png.flaticon.com/512/1553/1553874.png"));
+            addIcon(IconEntity(null,"Mosquito","https://cdn-icons-png.flaticon.com/512/2865/2865206.png"));
+            addIcon(IconEntity(null,"Spider","https://cdn-icons-png.flaticon.com/512/1850/1850190.png"));
+            addIcon(IconEntity(null,"Wasp","https://cdn-icons-png.flaticon.com/512/311/311590.png"));
+            addIcon(IconEntity(null,"Beetle","https://cdn-icons-png.flaticon.com/512/2975/2975299.png"));
+            addIcon(IconEntity(null,"Mouse","https://cdn-icons-png.flaticon.com/512/2297/2297338.png"));
+            addIcon(IconEntity(null,"Bat","https://cdn-icons-png.flaticon.com/512/616/616620.png"));
+            addIcon(IconEntity(null,"Bird","https://cdn-icons-png.flaticon.com/512/7197/7197073.png"));
         }
-        mIconViewModel.addIcon(IconEntity(0,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"))
-        mIconViewModel.addIcon(IconEntity(1,"Fly","https://cdn-icons-png.flaticon.com/512/2849/2849909.png"))
         Toast.makeText(requireContext(),"Data have been added to DB",Toast.LENGTH_SHORT).show()
     }
 
