@@ -85,7 +85,11 @@ class StickerBSFragment : BottomSheetDialogFragment() {
 
         //TODO : Try to fix the logic for sticker
         mIconViewModel = ViewModelProvider(this).get(IconViewModel::class.java)
-        mIconViewModel.deleteIconFromDB()
+        if (listStoryItem.isNotEmpty()){
+            mIconViewModel.deleteIconFromDB()
+        }
+//        mIconViewModel.deleteIconFromDB()
+
         mIconViewModel.readAllIcon.observe(this, Observer { icon->
             if (icon.isNullOrEmpty()){
                 addIconToDatabase()
