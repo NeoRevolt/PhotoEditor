@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.Icon
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -114,7 +113,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
             addIcon(IconEntity(null,"Bat","https://cdn-icons-png.flaticon.com/512/616/616620.png"));
             addIcon(IconEntity(null,"Bird","https://cdn-icons-png.flaticon.com/512/7197/7197073.png"));
         }
-        Toast.makeText(requireContext(),"Data have been added to DB",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),"Icons have been added to DB",Toast.LENGTH_SHORT).show()
     }
 
 
@@ -169,6 +168,7 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
             // Load sticker image from remote url
             Glide.with(requireContext())
                     .asBitmap()
