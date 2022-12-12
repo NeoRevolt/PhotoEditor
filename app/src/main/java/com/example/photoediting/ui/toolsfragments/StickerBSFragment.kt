@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -85,15 +86,22 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         //TODO : Try to fix the logic for sticker
         mIconViewModel = ViewModelProvider(this).get(IconViewModel::class.java)
         mIconViewModel.deleteIconFromDB()
-        addIconToDatabase()
         mIconViewModel.readAllIcon.observe(this, Observer { icon->
+            if (icon.isNullOrEmpty()){
+                addIconToDatabase()
+                stickerAdapter.setData(icon)
+            }
             stickerAdapter.setData(icon)
         })
     }
 
     private fun addIconToDatabase(){
+        mIconViewModel.apply {
+            addIcon(IconEntity(3,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"));
+            addIcon(IconEntity(4,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"));
+        }
         mIconViewModel.addIcon(IconEntity(0,"Mouse","https://cdn-icons-png.flaticon.com/256/4392/4392452.png"))
-        mIconViewModel.addIcon(IconEntity(0,"Fly","https://cdn-icons-png.flaticon.com/512/2849/2849909.png"))
+        mIconViewModel.addIcon(IconEntity(1,"Fly","https://cdn-icons-png.flaticon.com/512/2849/2849909.png"))
         Toast.makeText(requireContext(),"Data have been added to DB",Toast.LENGTH_SHORT).show()
     }
 
@@ -149,7 +157,6 @@ class StickerBSFragment : BottomSheetDialogFragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
             // Load sticker image from remote url
             Glide.with(requireContext())
                     .asBitmap()
