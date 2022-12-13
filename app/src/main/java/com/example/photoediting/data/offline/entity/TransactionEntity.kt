@@ -3,6 +3,7 @@ package com.example.photoediting.data.offline.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.File
 
 @Entity(tableName = "transactionTb")
 class TransactionEntity (

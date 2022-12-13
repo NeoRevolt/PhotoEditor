@@ -346,7 +346,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
             R.id.imgSave -> saveImage()
             R.id.imgClose -> onBackPressed()
 //            R.id.imgShare -> shareImage()
-            R.id.imgShare -> uploadImage()
+            R.id.imgShare -> sharePicture()
             R.id.imgCamera -> {
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(cameraIntent, CAMERA_REQUEST)
@@ -444,8 +444,61 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
         }
     }
 
-    // TODO(lucianocheng): Replace onActivityResult with Result API from Google
-    //                     See https://developer.android.com/training/basics/intents/result
+    private fun sharePicture() {
+        val fileName = System.currentTimeMillis().toString() + ".png"
+        val hasStoragePermission = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+        if (hasStoragePermission || FileSaveHelper.isSdkHigherThan28()) {
+            showLoading("Saving...")
+            mSaveFileHelper?.createFile(fileName, object : FileSaveHelper.OnFileCreateResult {
+
+                @RequiresPermission(allOf = [Manifest.permission.WRITE_EXTERNAL_STORAGE])
+                override fun onFileCreateResult(
+                    created: Boolean,
+                    filePath: String?,
+                    error: String?,
+                    uri: Uri?
+                ) {
+                    if (created && filePath != null) {
+                        val saveSettings = SaveSettings.Builder()
+                            .setClearViewsEnabled(true)
+                            .setTransparencyEnabled(true)
+                            .build()
+
+                        mPhotoEditor?.saveAsFile(
+                            filePath,
+                            saveSettings,
+                            object : OnSaveListener {
+                                override fun onSuccess(imagePath: String) {
+                                    mSaveFileHelper?.notifyThatFileIsNowPubliclyAvailable(
+                                        contentResolver
+                                    )
+                                    hideLoading()
+                                    showSnackbar("Image Saved Successfully")
+                                    mSaveImageUri = uri
+                                    mPhotoEditorView?.source?.setImageURI(mSaveImageUri)
+                                    val myFile = mSaveImageUri?.let { uriToFile(it,this@EditImageActivity)}
+                                    getFile = myFile
+                                    uploadImage()
+                                }
+
+                                override fun onFailure(exception: Exception) {
+                                    hideLoading()
+                                    showSnackbar("Failed to save Image")
+                                }
+                            })
+                    } else {
+                        hideLoading()
+                        error?.let { showSnackbar(error) }
+                    }
+                }
+            })
+        } else {
+            requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {

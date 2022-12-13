@@ -73,7 +73,7 @@ class RemoteImagesActivity : AppCompatActivity() {
                 showLoading(false)
                 Toast.makeText(
                     this@RemoteImagesActivity,
-                    "Gagal mendapatkan Story",
+                    "No Connection",
                     Toast.LENGTH_SHORT
                 ).show()
             }

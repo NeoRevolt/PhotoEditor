@@ -5,11 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.photoediting.data.offline.entity.IconEntity
+import com.example.photoediting.data.offline.entity.LayoutEntity
+import com.example.photoediting.data.offline.entity.TransactionEntity
 
-@Database(entities = [IconEntity::class], version = 1, exportSchema = false)
+@Database(entities = [IconEntity::class, LayoutEntity::class, TransactionEntity::class], version = 1, exportSchema = false)
 
 abstract class IconsDatabase : RoomDatabase() {
     abstract fun iconsDao(): IconsDao
+    abstract fun layoutDao(): LayoutDao
 
     companion object {
         @Volatile
