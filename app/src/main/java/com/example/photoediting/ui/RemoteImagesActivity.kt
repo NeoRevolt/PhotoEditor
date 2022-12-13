@@ -6,7 +6,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.photoediting.data.offline.LayoutViewModel
+import com.example.photoediting.data.offline.entity.LayoutEntity
+import com.example.photoediting.data.offline.room.LayoutDao
 import com.example.photoediting.data.remote.ApiConfig
 import com.example.photoediting.data.remote.GetAllStoryResponse
 import com.example.photoediting.data.remote.ListStoryItem
@@ -21,8 +28,13 @@ class RemoteImagesActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRemoteImagesBinding
     private lateinit var adapter: RemoteImagesAdapter
 
+
     private lateinit var sharedPreferences: SharedPreferences
     val listStoryItem = ArrayList<ListStoryItem>()
+
+    private lateinit var mLayoutModel: LayoutViewModel
+    private val result =
+        MediatorLiveData<com.example.photoediting.data.Result<List<LayoutEntity>>>()
 
     private var SHARED_PREF_NAME = "mypref"
 
@@ -38,7 +50,9 @@ class RemoteImagesActivity : AppCompatActivity() {
     }
 
     private fun setStory() {
+        result.value = com.example.photoediting.data.Result.Loading
         showLoading(true)
+        mLayoutModel = ViewModelProvider(this).get(LayoutViewModel::class.java)
         val service = ApiConfig.getApiService(this).getAllStory(30, 0)
         service.enqueue(object : Callback<GetAllStoryResponse> {
             override fun onResponse(
@@ -52,6 +66,20 @@ class RemoteImagesActivity : AppCompatActivity() {
                         response.body()?.listStory?.let { listStoryItem.addAll(it) }
 //                        adapter.setList(response.body()!!.listStory)
                         adapter.setList(listStoryItem)
+                        listStoryItem.forEach {
+//                            mLayoutModel.deleteLayoutFromDB()
+                            mLayoutModel.addLayout(
+                                LayoutEntity(
+                                    it.photoUrl,
+                                    it.createdAt,
+                                    it.name,
+                                    it.description,
+                                    it.lon,
+                                    it.id,
+                                    it.lat
+                                )
+                            )
+                        }
 
                         Toast.makeText(
                             this@RemoteImagesActivity,
@@ -78,6 +106,12 @@ class RemoteImagesActivity : AppCompatActivity() {
                 ).show()
             }
         })
+//        mLayoutModel.readAllLayout.observe(this, Observer { it ->
+//            it.forEach {
+//                listStoryItem.add(ListStoryItem(it.photoUrl,it.createdAt,it.name,it.description,it.lon,it.id,it.lat))
+//            }
+//            adapter.setList(listStoryItem)
+//        })
     }
 
     private fun initRv() {

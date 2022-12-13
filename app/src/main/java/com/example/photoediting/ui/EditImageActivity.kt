@@ -54,6 +54,9 @@ import java.io.File
 import java.io.IOException
 import java.lang.Exception
 import androidx.annotation.RequiresPermission
+import androidx.lifecycle.ViewModelProvider
+import com.example.photoediting.data.offline.LayoutViewModel
+import com.example.photoediting.data.offline.entity.TransactionEntity
 import com.example.photoediting.data.remote.AddNewStoryResponse
 import com.example.photoediting.data.remote.ApiConfig
 import com.example.photoediting.ui.toolsfragments.*
@@ -95,6 +98,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
 
     private var getFile: File? = null
     private lateinit var progressBar: ProgressBar
+    private lateinit var mTransactions: LayoutViewModel
 
     @VisibleForTesting
     var mSaveImageUri: Uri? = null
@@ -196,6 +200,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
     }
 
     private fun uploadImage(){
+        mTransactions = ViewModelProvider(this).get(LayoutViewModel::class.java)
         if (getFile != null){
             val file = reduceFileImage(getFile as File)
             val isi = "no capt"
@@ -227,6 +232,7 @@ class EditImageActivity : BaseActivity(), OnPhotoEditorListener, View.OnClickLis
                                 startActivity(it)
                                 finish()
                             }
+                            mTransactions.addTransaction(TransactionEntity(file.toString(),file.name,null))
                         }
                     } else {
                         showLoading(false)

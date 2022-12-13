@@ -11,22 +11,22 @@ class TransactionEntity (
     @field:ColumnInfo("photoUrl")
     val photoUrl: String,
 
-    @field:ColumnInfo("createdAt")
-    val createdAt: String,
+//    @field:ColumnInfo("createdAt")
+//    val createdAt: String,
 
     @field:ColumnInfo("name")
     val name: String,
 
-    @field:ColumnInfo("description")
-    val description: String,
+//    @field:ColumnInfo("description")
+//    val description: String,
 
-    @field:ColumnInfo("lon")
-    val lon: Double,
+//    @field:ColumnInfo("lon")
+//    val lon: Double? = null,
 
-    @field:PrimaryKey
+    @field:PrimaryKey(autoGenerate = true)
     @field:ColumnInfo("id")
-    val id: String,
+    val id: Int? = null,
 
-    @field:ColumnInfo("lat")
-    var lat: Double
+//    @field:ColumnInfo("lat")
+//    var lat: Double? = null
 )
